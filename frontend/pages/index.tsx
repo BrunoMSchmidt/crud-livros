@@ -1,14 +1,31 @@
-import { Button, Container, Modal } from '@mui/material';
-import Head from 'next/head';
-import { useEffect, useState } from 'react';
-import { CadastrarEditarLivro } from '../components/cadastrar-livro/cadastrar-editar-livro';
-import { ApiConstants } from '../constants/api.constants';
-import { Livro } from '../models/Livro';
-import styles from '../styles/Home.module.scss';
+import {
+  Button,
+  Card,
+  CardActions,
+  CardContent,
+  CardMedia,
+  Container,
+  Grid,
+  Modal,
+  Typography,
+} from "@mui/material";
+import Head from "next/head";
+import { useEffect, useState } from "react";
+import { CadastrarEditarLivro } from "../components/cadastrar-livro/cadastrar-editar-livro";
+import { ExcluirLivro } from "../components/excluir-livro/excluir-livro";
+import { ApiConstants } from "../constants/api.constants";
+import { Livro } from "../models/Livro";
+import styles from "../styles/Home.module.scss";
 
 export default function Home() {
   const [livros, setLivros] = useState<Array<Livro>>([]);
   const [modalCadastroAberto, setModalCadastroAberto] = useState(false);
+  const [livroSendoEditado, setLivroSendoEditado] = useState<null | Livro>(
+    null
+  );
+  const [livroSendoExcluido, setLivroSendoExcluido] = useState<null | Livro>(
+    null
+  );
 
   function abrirModalCadastro() {
     setModalCadastroAberto(true);
@@ -16,6 +33,22 @@ export default function Home() {
 
   function fecharModalCadastro() {
     setModalCadastroAberto(false);
+  }
+
+  function abrirModalEditar(livro: Livro) {
+    setLivroSendoEditado(livro);
+  }
+
+  function fecharModalEditar() {
+    setLivroSendoEditado(null);
+  }
+
+  function abrirModalExcluir(livro: Livro) {
+    setLivroSendoExcluido(livro);
+  }
+
+  function fecharModalExcluir() {
+    setLivroSendoExcluido(null);
   }
 
   async function buscarLivros() {
@@ -36,28 +69,74 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Container maxWidth="md">
-        <h1>Livros</h1>
-        <ul>
+      <Container className={styles.container} maxWidth="md">
+        <h1 className={styles.titulo}>Livros</h1>
+        <div className={styles.cadastrarButton}>
+          <Button variant="outlined" onClick={() => abrirModalCadastro()}>
+            {" "}
+            Cadastrar novo livro{" "}
+          </Button>
+        </div>
+        <Grid container spacing={2}>
           {livros.map((livro) => (
-            <li key={livro.id}>{livro.titulo}</li>
+            <Grid key={livro.id} item xs={12} sm={6} md={4}>
+              <Card>
+                {livro.imagem ? (
+                  <CardMedia
+                    component="img"
+                    alt={`capa do livro ${livro.titulo}`}
+                    height="140"
+                    image={livro.imagem}
+                  />
+                ) : null}
+                <CardContent>
+                  <Typography gutterBottom variant="h5" component="div">
+                    {livro.titulo}
+                  </Typography>
+                  <Typography
+                    className={styles.descricaoCard}
+                    variant="body2"
+                    color="text.secondary"
+                  >
+                    {livro.descricao}
+                  </Typography>
+                  <Typography variant="caption" color="text.secondary">
+                    Autor(a): {livro.autor} | Ano: {livro.ano} | Editora:{" "}
+                    {livro.editora}
+                  </Typography>
+                </CardContent>
+                <CardActions>
+                  <Button size="small" onClick={() => abrirModalEditar(livro)}>
+                    Editar
+                  </Button>
+                  <Button size="small" onClick={() => abrirModalExcluir(livro)}>
+                    Excluir
+                  </Button>
+                </CardActions>
+              </Card>
+            </Grid>
           ))}
-        </ul>
-
-        <Button variant="outlined" onClick={() => abrirModalCadastro()}>
-          {' '}
-          Cadastrar{' '}
-        </Button>
+        </Grid>
       </Container>
 
-      <Modal
-        onClose={() => fecharModalCadastro()}
-        closeAfterTransition
-        open={modalCadastroAberto}
-      >
+      <Modal closeAfterTransition open={modalCadastroAberto}>
         <CadastrarEditarLivro
           onClose={fecharModalCadastro}
           onAtualizarLista={buscarLivros}
+        />
+      </Modal>
+      <Modal closeAfterTransition open={!!livroSendoEditado}>
+        <CadastrarEditarLivro
+          onClose={fecharModalEditar}
+          onAtualizarLista={buscarLivros}
+          editandoLivro={livroSendoEditado!}
+        />
+      </Modal>
+      <Modal closeAfterTransition open={!!livroSendoExcluido}>
+        <ExcluirLivro
+          onClose={fecharModalExcluir}
+          onAtualizarLista={buscarLivros}
+          livro={livroSendoExcluido!}
         />
       </Modal>
     </div>

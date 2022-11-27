@@ -7,66 +7,70 @@ import { Livro } from './entities/livro.entity';
 
 @Injectable()
 export class LivrosService {
-  constructor(
-    @InjectRepository(Livro) private livrosRepository: Repository<Livro>,
-  ) {}
+    constructor(
+        @InjectRepository(Livro) private livrosRepository: Repository<Livro>,
+    ) {}
 
-  async create(createLivroDto: CreateLivroDto) {
-    return await this.livrosRepository.save(createLivroDto);
-  }
-
-  async findAll() {
-    return await this.livrosRepository.find();
-  }
-
-  async findOne(id: number) {
-    const livro = await this.livrosRepository.findOneBy({
-      id,
-    });
-
-    if (!livro) {
-      throw new NotFoundException('Livro não encontrado');
+    async create(createLivroDto: CreateLivroDto) {
+        return await this.livrosRepository.save(createLivroDto);
     }
 
-    return livro;
-  }
-
-  async update(id: number, updateLivroDto: UpdateLivroDto) {
-    const livroEditado = await this.livrosRepository.findOneBy({ id });
-    if (!livroEditado) {
-      throw new NotFoundException('Livro não encontrado');
+    async findAll() {
+        return await this.livrosRepository.find();
     }
 
-    if (updateLivroDto.ano) {
-      livroEditado.ano = updateLivroDto.ano;
+    async findOne(id: number) {
+        const livro = await this.livrosRepository.findOneBy({
+            id,
+        });
+
+        if (!livro) {
+            throw new NotFoundException('Livro não encontrado');
+        }
+
+        return livro;
     }
 
-    if (updateLivroDto.autor) {
-      livroEditado.autor = updateLivroDto.autor;
+    async update(id: number, updateLivroDto: UpdateLivroDto) {
+        const livroEditado = await this.livrosRepository.findOneBy({ id });
+        if (!livroEditado) {
+            throw new NotFoundException('Livro não encontrado');
+        }
+
+        if (updateLivroDto.ano) {
+            livroEditado.ano = updateLivroDto.ano;
+        }
+
+        if (updateLivroDto.autor) {
+            livroEditado.autor = updateLivroDto.autor;
+        }
+
+        if (updateLivroDto.descricao) {
+            livroEditado.descricao = updateLivroDto.descricao;
+        }
+
+        if (updateLivroDto.imagem) {
+            livroEditado.imagem = updateLivroDto.imagem;
+        }
+
+        if (updateLivroDto.titulo) {
+            livroEditado.titulo = updateLivroDto.titulo;
+        }
+
+        if (updateLivroDto.editora) {
+            livroEditado.editora = updateLivroDto.editora;
+        }
+
+        return livroEditado.save();
     }
 
-    if (updateLivroDto.descricao) {
-      livroEditado.descricao = updateLivroDto.descricao;
+    async remove(id: number) {
+        const livroParaDeletar = await this.livrosRepository.findOneBy({ id });
+
+        if (!livroParaDeletar) {
+            throw new NotFoundException('Livro não encontrado');
+        }
+
+        return this.livrosRepository.remove(livroParaDeletar);
     }
-
-    if (updateLivroDto.imagem) {
-      livroEditado.imagem = updateLivroDto.imagem;
-    }
-
-    if (updateLivroDto.titulo) {
-      livroEditado.titulo = updateLivroDto.titulo;
-    }
-
-    return livroEditado.save();
-  }
-
-  async remove(id: number) {
-    const livroParaDeletar = await this.livrosRepository.findOneBy({ id });
-
-    if (!livroParaDeletar) {
-      throw new NotFoundException('Livro não encontrado');
-    }
-
-    return this.livrosRepository.remove(livroParaDeletar);
-  }
 }

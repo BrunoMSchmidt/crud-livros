@@ -4,12 +4,15 @@
   margin-top: min(20vh, 200px);
   border-radius: 5px;
   border: 1px solid #cecece;
-  padding: 20px;
-  justify-content: center;
-  
-  .botao {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
+  padding: 20px;  
+}
+
+.texto {
+  text-align: center;
+}
+
+.botoes {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
 }
