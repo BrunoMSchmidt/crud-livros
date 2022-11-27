@@ -24,6 +24,13 @@ export class Livro extends BaseEntity {
     @IsString()
     autor: string;
 
+    @Column({ length: 100, nullable: true })
+    @MinLength(3)
+    @MaxLength(100)
+    @IsString()
+    editora: string;
+
+    @Column({ nullable: true })
     @IsNumber()
     ano: number;
 
