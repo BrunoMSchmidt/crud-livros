@@ -1,12 +1,26 @@
+.modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100vw;
+  transform: translate(-50%, -50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 98vh;
+  width: 98vw;
+}
+
 .container {
   position: relative;
   background-color: white;
-  margin-top: min(20vh, 200px);
   border-radius: 5px;
   border: 1px solid #cecece;
   padding: 20px;
   justify-content: center;
-  
+  max-height: 100%;
+  overflow: auto;
+
   .botao {
     display: flex;
     justify-content: center;

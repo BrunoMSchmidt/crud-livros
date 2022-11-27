@@ -8,14 +8,14 @@ import {
   Grid,
   Modal,
   Typography,
-} from "@mui/material";
-import Head from "next/head";
-import { useEffect, useState } from "react";
-import { CadastrarEditarLivro } from "../components/cadastrar-livro/cadastrar-editar-livro";
-import { ExcluirLivro } from "../components/excluir-livro/excluir-livro";
-import { ApiConstants } from "../constants/api.constants";
-import { Livro } from "../models/Livro";
-import styles from "../styles/Home.module.scss";
+} from '@mui/material';
+import Head from 'next/head';
+import { useEffect, useState } from 'react';
+import { CadastrarEditarLivro } from '../components/cadastrar-livro/cadastrar-editar-livro';
+import { ExcluirLivro } from '../components/excluir-livro/excluir-livro';
+import { ApiConstants } from '../constants/api.constants';
+import { Livro } from '../models/Livro';
+import styles from '../styles/Home.module.scss';
 
 export default function Home() {
   const [livros, setLivros] = useState<Array<Livro>>([]);
@@ -73,14 +73,14 @@ export default function Home() {
         <h1 className={styles.titulo}>Livros</h1>
         <div className={styles.cadastrarButton}>
           <Button variant="outlined" onClick={() => abrirModalCadastro()}>
-            {" "}
-            Cadastrar novo livro{" "}
+            {' '}
+            Cadastrar novo livro{' '}
           </Button>
         </div>
         <Grid container spacing={2}>
           {livros.map((livro) => (
             <Grid key={livro.id} item xs={12} sm={6} md={4}>
-              <Card>
+              <Card className={styles['card']}>
                 {livro.imagem ? (
                   <CardMedia
                     component="img"
@@ -89,7 +89,7 @@ export default function Home() {
                     image={livro.imagem}
                   />
                 ) : null}
-                <CardContent>
+                <CardContent className={styles['card-content']}>
                   <Typography gutterBottom variant="h5" component="div">
                     {livro.titulo}
                   </Typography>
@@ -101,15 +101,25 @@ export default function Home() {
                     {livro.descricao}
                   </Typography>
                   <Typography variant="caption" color="text.secondary">
-                    Autor(a): {livro.autor} | Ano: {livro.ano} | Editora:{" "}
+                    Autor(a): {livro.autor} | Ano: {livro.ano} | Editora:{' '}
                     {livro.editora}
                   </Typography>
                 </CardContent>
-                <CardActions>
-                  <Button size="small" onClick={() => abrirModalEditar(livro)}>
+                <CardActions className={styles['card-actions']}>
+                  <Button
+                    variant="outlined"
+                    color="primary"
+                    size="small"
+                    onClick={() => abrirModalEditar(livro)}
+                  >
                     Editar
                   </Button>
-                  <Button size="small" onClick={() => abrirModalExcluir(livro)}>
+                  <Button
+                    variant="outlined"
+                    color="error"
+                    size="small"
+                    onClick={() => abrirModalExcluir(livro)}
+                  >
                     Excluir
                   </Button>
                 </CardActions>
