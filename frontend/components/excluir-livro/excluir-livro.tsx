@@ -1,30 +1,46 @@
-import { Box, Button } from "@mui/material";
-import { Container } from "@mui/system";
-import Axios from "axios";
-import Head from "next/head";
-import { ApiConstants } from "../../constants/api.constants";
-import { Livro } from "../../models/Livro";
-import styles from "./excluir-livro.module.scss";
+import { AlertColor, Box, Button } from '@mui/material';
+import { Container } from '@mui/system';
+import Axios from 'axios';
+import Head from 'next/head';
+import { ApiConstants } from '../../constants/api.constants';
+import { Livro } from '../../models/Livro';
+import styles from './excluir-livro.module.scss';
 
 type ExcluirLivroProps = {
   onClose: () => void;
   onAtualizarLista: () => void;
   livro: Livro;
+  abrirSnackbar: (mensagem: string, severity?: AlertColor) => void;
 };
 
 export function ExcluirLivro({
   onClose,
   onAtualizarLista,
   livro,
+  abrirSnackbar,
 }: ExcluirLivroProps) {
-  async function excluirLivro() {
-    const response = await Axios.delete(
-      `${ApiConstants.API_LIVROS}/${livro.id}`
-    );
+  function abrirSnackbarSucesso(mensagem: string) {
+    abrirSnackbar(mensagem, 'success');
+  }
 
-    if (response.status == 200) {
-      onAtualizarLista();
-      onClose();
+  function abrirSnackbarErro(mensagem: string) {
+    abrirSnackbar(mensagem, 'error');
+  }
+
+  async function excluirLivro() {
+    try {
+      const response = await Axios.delete(
+        `${ApiConstants.API_LIVROS}/${livro.id}`
+      );
+
+      if (response.status == 200) {
+        abrirSnackbarSucesso('Livro excluído com sucesso!');
+
+        onAtualizarLista();
+        onClose();
+      }
+    } catch (error) {
+      abrirSnackbarErro('Erro ao excluir o livro');
     }
   }
 

@@ -10,6 +10,8 @@ describe('LivrosService', () => {
         }).compile();
 
         service = module.get<LivrosService>(LivrosService);
+
+        console.log(service);
     });
 
     it('should be defined', () => {

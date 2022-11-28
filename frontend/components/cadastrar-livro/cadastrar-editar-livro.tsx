@@ -1,4 +1,4 @@
-import { Button, Container, Typography } from '@mui/material';
+import { AlertColor, Button, Container, Typography } from '@mui/material';
 import TextField from '@mui/material/TextField';
 import { Box } from '@mui/system';
 import Axios from 'axios';
@@ -12,12 +12,14 @@ type CadastrarEditarLivroProps = {
   onClose: () => void;
   onAtualizarLista: () => void;
   editandoLivro?: Livro;
+  abrirSnackbar: (mensagem: string, severity?: AlertColor) => void;
 };
 
 export function CadastrarEditarLivro({
   onClose,
   onAtualizarLista,
   editandoLivro,
+  abrirSnackbar,
 }: CadastrarEditarLivroProps) {
   const formDefault = {
     titulo: '',
@@ -26,6 +28,11 @@ export function CadastrarEditarLivro({
     editora: '',
     imagem: '',
     descricao: '',
+  };
+
+  const snackBarDefault = {
+    open: false,
+    message: '',
   };
 
   const [form, setForm] = useState<any>(editandoLivro ?? formDefault);
@@ -37,30 +44,49 @@ export function CadastrarEditarLivro({
     });
   }
 
-  async function cadastrarLivro() {
-    const response = await Axios.request({
-      method: 'POST',
-      url: `${ApiConstants.API_LIVROS}`,
-      data: form,
-    });
+  function openSuccessSnackbar(mensagem: string) {
+    abrirSnackbar(mensagem, 'success');
+  }
 
-    if (response.status == 201) {
-      console.log('Chegou aqui');
-      onAtualizarLista();
-      onClose();
+  function openErrorSnackbar(mensagem: string) {
+    abrirSnackbar(mensagem, 'error');
+  }
+
+  async function cadastrarLivro() {
+    try {
+      const response = await Axios.request({
+        method: 'POST',
+        url: `${ApiConstants.API_LIVROS}`,
+        data: form,
+      });
+
+      if (response.status == 201) {
+        openSuccessSnackbar('Livro cadastrado com sucesso!');
+
+        onAtualizarLista();
+        onClose();
+      }
+    } catch (error) {
+      openErrorSnackbar('Erro ao cadastrar livro');
     }
   }
 
   async function editarLivro() {
-    const response = await Axios.request({
-      method: 'PATCH',
-      url: `${ApiConstants.API_LIVROS}/${editandoLivro?.id}`,
-      data: form,
-    });
+    try {
+      const response = await Axios.request({
+        method: 'PATCH',
+        url: `${ApiConstants.API_LIVROS}/${editandoLivro?.id}`,
+        data: form,
+      });
 
-    if (response.status == 200) {
-      onAtualizarLista();
-      onClose();
+      if (response.status == 200) {
+        openSuccessSnackbar('Livro editado com sucesso!');
+
+        onAtualizarLista();
+        onClose();
+      }
+    } catch (error) {
+      openErrorSnackbar('Erro ao editar livro');
     }
   }
 
