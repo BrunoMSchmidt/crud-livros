@@ -9,8 +9,8 @@ Crud de livros desenvolvido em Typescript com o framework NestJS, ReactJS no fro
 - NPM
 
 ## Autores
-[Bruno Marlon Schmidt](https://github.com/BrunoMSchmidt)
-[Ana Luiza Epping]()
+- [Bruno Marlon Schmidt](https://github.com/BrunoMSchmidt)
+- [Ana Luiza Epping](https://github.com/Ana-Epping)
 
 ---
 ## Configuração do banco de dados
@@ -46,7 +46,7 @@ npm start
 ```
 ```
 cd frontend
-npm start
+npm run dev
 ```
 
 ## 3 - Acessar o projeto
