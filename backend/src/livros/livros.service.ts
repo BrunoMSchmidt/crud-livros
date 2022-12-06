@@ -37,29 +37,20 @@ export class LivrosService {
             throw new NotFoundException('Livro não encontrado');
         }
 
-        if (updateLivroDto.ano) {
-            livroEditado.ano = updateLivroDto.ano;
-        }
+        const properties = [
+            'titulo',
+            'autor',
+            'ano',
+            'editora',
+            'imagem',
+            'descricao',
+        ];
 
-        if (updateLivroDto.autor) {
-            livroEditado.autor = updateLivroDto.autor;
-        }
-
-        if (updateLivroDto.descricao) {
-            livroEditado.descricao = updateLivroDto.descricao;
-        }
-
-        if (updateLivroDto.imagem) {
-            livroEditado.imagem = updateLivroDto.imagem;
-        }
-
-        if (updateLivroDto.titulo) {
-            livroEditado.titulo = updateLivroDto.titulo;
-        }
-
-        if (updateLivroDto.editora) {
-            livroEditado.editora = updateLivroDto.editora;
-        }
+        properties.forEach((property) => {
+            if (updateLivroDto[property] !== undefined) {
+                livroEditado[property] = updateLivroDto[property];
+            }
+        });
 
         return livroEditado.save();
     }

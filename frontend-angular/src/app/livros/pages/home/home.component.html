@@ -1,0 +1,40 @@
+<p-confirmDialog
+  [baseZIndex]="10000"
+  rejectButtonStyleClass="p-button-text"
+></p-confirmDialog>
+
+<div pFocusTrap>
+  <div class="w-full surface-50 h-4rem flex align-items-center px-4 mb-4">
+    <div
+      class="w-full md:w-10 lg:w-8 mx-auto flex mx-2 gap-4 justify-content-between"
+    >
+      <h1 class="m-0">Livros</h1>
+
+      <button
+        pButton
+        pRipple
+        type="button"
+        icon="pi pi-plus"
+        label="Cadastrar"
+        class="p-button p-button-outlined border-round-lg"
+        (click)="navegarParaCadastro()"
+      ></button>
+    </div>
+  </div>
+
+  <div
+    class="w-full md:w-10 lg:w-8 mx-auto fadein animation-duration-100 overflow-hidden"
+  >
+    <ng-container *ngIf="livros$ | async as livros">
+      <div class="grid">
+        <app-card-livro
+          class="col-12 md:col-6 xl:col-4"
+          *ngFor="let livro of livros"
+          [livro]="livro"
+          (deletar)="deletarLivro(livro.id!)"
+          (editar)="navegarParaEditar(livro.id!)"
+        ></app-card-livro>
+      </div>
+    </ng-container>
+  </div>
+</div>

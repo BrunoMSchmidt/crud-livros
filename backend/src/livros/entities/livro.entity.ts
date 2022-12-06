@@ -12,9 +12,7 @@ export class Livro extends BaseEntity {
     @IsString()
     titulo: string;
 
-    @Column({ length: 1000, nullable: true })
-    @MinLength(3)
-    @MaxLength(1000)
+    @Column({ type: 'longtext', nullable: true })
     @IsString()
     descricao: string;
 

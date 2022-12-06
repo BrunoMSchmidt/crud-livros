@@ -1,0 +1,47 @@
+<div
+  class="shadow-3 surface-card overflow-hidden border-round-xl h-full flex flex-column border-1 surface-border zoomin animation-duration-100 animation-ease-out mx-auto max-w-30rem xl:max-w-full"
+>
+  <div>
+    <img
+      class="border-bottom-1 surface-border"
+      *ngIf="livro.imagem"
+      [src]="livro.imagem"
+      [alt]="'imagem ' + livro.titulo"
+      width="100%"
+      height="200px"
+    />
+    <h2
+      class="px-4 m-0 py-3 text-xl text-center text-primary border-bottom-1 surface-border"
+    >
+      {{ livro.titulo }}
+    </h2>
+  </div>
+
+  <div class="flex-1 px-4">
+    <p *ngIf="livro.autor"><b>Autor:</b> {{ livro.autor }}</p>
+    <p *ngIf="livro.editora"><b>Editora:</b> {{ livro.editora }}</p>
+    <p *ngIf="livro.ano"><b>Ano:</b> {{ livro.ano }}</p>
+    <pre *ngIf="livro.descricao" [innerHtml]="livro.descricao"></pre>
+  </div>
+
+  <div
+    class="flex border-top-1 surface-border p-button-sm justify-content-end gap-2 py-2 px-3"
+  >
+    <button
+      pButton
+      pRipple
+      type="button"
+      label="Editar"
+      class="p-button-sm p-button-warning p-button-outlined border-round-lg"
+      (click)="onClickEditar()"
+    ></button>
+    <button
+      pButton
+      pRipple
+      type="button"
+      label="Remover"
+      class="p-button-sm p-button-danger p-button-outlined border-round-lg"
+      (click)="onClickDeletar()"
+    ></button>
+  </div>
+</div>

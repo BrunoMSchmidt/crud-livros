@@ -5,8 +5,8 @@ import { LivrosController } from './livros.controller';
 import { LivrosService } from './livros.service';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Livro])],
-  controllers: [LivrosController],
-  providers: [LivrosService],
+    imports: [TypeOrmModule.forFeature([Livro])],
+    controllers: [LivrosController],
+    providers: [LivrosService],
 })
 export class LivrosModule {}

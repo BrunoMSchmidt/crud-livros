@@ -1,0 +1,56 @@
+<div class="form" [formGroup]="form">
+  <div class="field flex flex-column">
+    <label
+      >Titulo
+      <span class="text-red-200">*</span>
+    </label>
+    <input type="text" pInputText formControlName="titulo" />
+  </div>
+  <div class="field flex flex-column">
+    <label
+      >Autor
+      <span class="text-red-200">*</span>
+    </label>
+    <input type="text" pInputText formControlName="autor" />
+  </div>
+  <div class="field flex flex-column">
+    <label
+      >Editora
+      <span class="text-red-200">*</span>
+    </label>
+    <input type="text" pInputText formControlName="editora" />
+  </div>
+  <div class="field flex flex-column">
+    <label>Ano</label>
+    <input type="text" pInputText formControlName="ano" />
+  </div>
+  <div class="field flex flex-column">
+    <label>Descricao</label>
+    <p-editor
+      formControlName="descricao"
+      class="h-12rem"
+      styleClass="h-8rem"
+    ></p-editor>
+  </div>
+  <div class="field flex flex-column">
+    <label>Imagem (URL)</label>
+    <input type="text" pInputText formControlName="imagem" />
+  </div>
+
+  <ng-container *ngIf="errors$ | async as errors">
+    <div
+      *ngIf="errors.length > 0"
+      class="bg-red-200 border-1 border-red-300 text-black-alpha-90 p-3 border-round-lg"
+    >
+      <div class="text-lg font-medium pl-3">
+        <i class="pi pi-exclamation-triangle text-xl"></i>
+        Verifique os erros abaixo:
+      </div>
+      <ul class="list-disc">
+        <li *ngFor="let error of errors">
+          {{ error }}
+        </li>
+      </ul>
+    </div>
+  </ng-container>
+</div>

@@ -1,5 +1,5 @@
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
-import { Livro } from 'src/livros/entities/livro.entity';
+import { Livro } from '../livros/entities/livro.entity';
 
 const dbconfig: TypeOrmModuleOptions = {
     type: 'mysql',

@@ -1,0 +1,31 @@
+<div pFocusTrap>
+  <div class="w-full surface-50 h-4rem flex align-items-center px-4 mb-4">
+    <div
+      class="w-full md:w-10 lg:w-8 mx-auto flex mx-2 gap-4 justify-content-between"
+    >
+      <h1 class="m-0">Cadastrar livro</h1>
+
+      <button
+        pButton
+        pRipple
+        type="button"
+        icon="pi pi-arrow-left"
+        label="Voltar"
+        class="p-button p-button-outlined border-round-lg"
+        (click)="voltar()"
+      ></button>
+    </div>
+  </div>
+
+  <div
+    class="w-full md:w-10 lg:w-8 mx-auto fadein animation-duration-100 surface-card p-3 border-round-lg mb-4"
+  >
+    <app-form-livro></app-form-livro>
+
+    <div class="flex justify-content-end mt-4">
+      <button class="flex gap-2" pButton type="submit" (click)="cadastrar()">
+        <i class="pi pi-pencil"></i> Cadastrar
+      </button>
+    </div>
+  </div>
+</div>
